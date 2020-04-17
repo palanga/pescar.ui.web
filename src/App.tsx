@@ -1,25 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { MockedProvider } from "@apollo/react-testing";
+import { mock as LandingsByLocationMock } from "./analytics/widgets/LandingsByLocation";
+import { AnalyticsHome } from "./analytics/AnalyticsHome";
+import { Home } from "./home/Home";
+
+const mocks =
+  [
+    LandingsByLocationMock,
+  ]
 
 function App() {
+
+  const [selectedTab, selectTab] = useState<string>("home")
+
+  function selectHomeTab() {
+    selectTab("home")
+  }
+
+  function selectAnalyticsTab() {
+    selectTab("analytics")
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MockedProvider mocks={mocks} addTypename={false}>
+      <div>
+        <div>
+          <button onClick={selectHomeTab}>home</button>
+          <button onClick={selectAnalyticsTab}>analytics</button>
+        </div>
+        <div>
+          {selectedTab === "home" ? <Home/> : null}
+          {selectedTab === "analytics" ? <AnalyticsHome/> : null}
+        </div>
+      </div>
+    </MockedProvider>
   );
 }
 
