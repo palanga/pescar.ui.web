@@ -3,6 +3,8 @@ import React from "react";
 
 export function AnalyticsHome() {
   return (
-    <LandingsByLocation/>
+    <div>
+      <LandingsByLocation/>
+    </div>
   )
 }
